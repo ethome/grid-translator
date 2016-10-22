@@ -1,4 +1,10 @@
-class CitrixTranslator
+#!/usr/bin/env ruby
+
+require_relative 'translator'
+require_relative 'grid_parser'
+require_relative 'coordinate_parser'
+
+class Translator
   def initialize(grid_parser, coordinate_parser)
     @grid_parser = grid_parser
     @coordinate_parser = coordinate_parser
@@ -13,4 +19,13 @@ class CitrixTranslator
       .map { |value| value.downcase }
       .join
   end
+end
+
+if __FILE__ == $0
+  grid_filename, *coordinates = ARGV
+
+  translator = Translator.new(GridParser.new, CoordinateParser.new)
+  result = translator.translate(grid_filename, coordinates)
+
+  puts result
 end
